@@ -1,4 +1,4 @@
-package com.example.vocansies.featureHome.presentation
+package com.example.vocansies.featureAddVocancies.presentation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -9,16 +9,13 @@ import com.example.vocansies.core.entity.internal.Screen
 import com.example.vocansies.featureHome.presentation.homeScreen.HomeScreen
 import com.example.vocansies.featureHome.presentation.vacancyDescriptionScreen.VacancyDescriptionScreen
 
-fun NavGraphBuilder.HomeGraph(navController: NavController) {
+fun NavGraphBuilder.AddVacancyGraph(navController: NavController) {
     navigation(
-        startDestination = Screen.HomeScreen.route,
-        route = Graph.HomeGraph.route
+        startDestination = Screen.AddVacancyScreen.route,
+        route = Graph.AddVacancyGraph.route
     ) {
-        composable(route = Screen.HomeScreen.route) {
-            HomeScreen(navController = navController)
-        }
-        composable(route = Screen.DescriptionScreen.route) {
-            VacancyDescriptionScreen(navController = navController)
+        composable(route = Screen.AddVacancyScreen.route) {
+            AddVacancyScreen(navController = navController)
         }
         /*composable(route = Screen.RegistrationScreen.route) {
             RegistrationScreen(navController = navController)

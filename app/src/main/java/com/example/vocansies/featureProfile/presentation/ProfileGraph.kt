@@ -6,8 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.vocansies.core.entity.internal.Graph
 import com.example.vocansies.core.entity.internal.Screen
-import com.example.vocansies.featureHome.presentation.homeScreen.HomeScreen
-import com.example.vocansies.featureHome.presentation.vacancyDescriptionScren.VacancyDescriptionScreen
+import com.example.vocansies.featureProfile.presentation.profileScreen.ProfileScreen
 
 fun NavGraphBuilder.ProfileGraph(navController: NavController) {
     navigation(

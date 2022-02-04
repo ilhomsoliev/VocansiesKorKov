@@ -1,6 +1,5 @@
 package com.example.vocansies.app.presentation.components
 
-import android.system.Os.close
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,11 +12,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.vocansies.core.entity.internal.Screen
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @Composable
-fun DrawerContent(navController: NavController,onItemClicked:()->Unit) {
+fun DrawerContent(navController: NavController, onItemClicked: (String) -> Unit) {
     Box(modifier = Modifier
         .fillMaxWidth()
         .clickable {
@@ -31,16 +28,34 @@ fun DrawerContent(navController: NavController,onItemClicked:()->Unit) {
     }
     Divider()
     DrawerTextSection(text = "Profile", onClick = {
-        navController.navigate(Screen.ProfileScreen.route)
-        onItemClicked()
+        onItemClicked(Screen.ProfileScreen.route)
     })
-    DrawerTextSection(text = "New resume", onClick = {})
-    DrawerTextSection(text = "Add vocancies", onClick = {})
+    /*DrawerTextSection(text = "New resume", onClick = {
+        onItemClicked(Screen.AddVacancyScreen.route)
+    })*/
+    DrawerTextSection(text = "Add vocancies", onClick = {
+        onItemClicked(Screen.AddVacancyScreen.route)
+    })
     Divider()
-    DrawerTextSection(text = "Home", onClick = {})
-    DrawerTextSection(text = "Resume", onClick = {})
-    DrawerTextSection(text = "Interview", onClick = {})
-    DrawerTextSection(text = "About app", onClick = {})
-    DrawerTextSection(text = "Feedback", onClick = {})
-    DrawerTextSection(text = "Suitable jobs", onClick = {})
+    DrawerTextSection(text = "Home", onClick = {
+        onItemClicked(Screen.HomeScreen.route)
+    })
+    DrawerTextSection(text = "My favorite vacancies", onClick = {
+        onItemClicked(Screen.HomeScreen.route)
+    })
+    DrawerTextSection(text = "Resume", onClick = {
+        onItemClicked(Screen.ResumeScreen.route)
+    })
+    DrawerTextSection(text = "Interview", onClick = {
+
+    })
+    DrawerTextSection(text = "About app", onClick = {
+
+    })
+    DrawerTextSection(text = "Feedback", onClick = {
+
+    })
+    DrawerTextSection(text = "Suitable jobs", onClick = {
+
+    })
 }

@@ -1,6 +1,7 @@
 package com.example.vocansies.featureHome.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -20,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.constraintlayout.widget.ConstraintLayout
 
 @Composable
 fun FinderBlock() {
@@ -83,7 +85,10 @@ fun FinderBlock() {
             }
             .size(56.dp)
             .clip(RoundedCornerShape(8.dp))
-            .background(Color(0xFFC9C9C9)), contentAlignment = Alignment.Center) {
+            .background(Color(0xFFC9C9C9))
+            .clickable {
+
+            }, contentAlignment = Alignment.Center) {
             Icon(imageVector = Icons.Default.Sort, contentDescription = "")
         }
     }

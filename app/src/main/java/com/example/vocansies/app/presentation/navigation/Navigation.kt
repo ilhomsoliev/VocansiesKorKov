@@ -1,5 +1,6 @@
 package com.example.vocansies.app.presentation.navigation
 
+import android.util.Log
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -18,9 +19,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.vocansies.app.presentation.components.DrawerContent
 import com.example.vocansies.core.entity.internal.Graph
 import com.example.vocansies.core.entity.internal.Screen
+import com.example.vocansies.featureAddVocancies.presentation.AddVacancyGraph
 import com.example.vocansies.featureAuthoration.presentation.AuthGraph
 import com.example.vocansies.featureHome.presentation.HomeGraph
+import com.example.vocansies.featureMyFavoriteVacancies.presentation.MyFavoriteVacanciesGraph
+import com.example.vocansies.featureMyFavoriteVacancies.presentation.MyFavoriteVacanciesScreen
 import com.example.vocansies.featureProfile.presentation.ProfileGraph
+import com.example.vocansies.featureResume.presentation.ResumeGraph
 import kotlinx.coroutines.launch
 
 @Composable
@@ -35,12 +40,42 @@ fun Navigation() {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            if (currentDestination?.isCurrentDestinationDescriptionScreen() == true) {
+            val title = remember {
+                mutableStateOf("")
+            }
+            Log.d("Hello", "${currentDestination?.getCurrentRoute()} HERE")
+            when (currentDestination?.getCurrentRoute()) {
+                Screen.HomeScreen.route -> title.value = "KorKov"
+                Screen.ProfileScreen.route -> title.value = "Profile"
+                Screen.AboutAppScreen.route -> title.value = "About App"
+                Screen.SuitableJobScreen.route -> title.value = "Suitable Job"
+                Screen.InterviewScreen.route -> title.value = "Interview"
+                Screen.AddVacancyScreen.route -> title.value = "Create Vacancy"
+                Screen.MyFavoriteVacanciesScreen.route -> title.value = "Favorite Vacancies"
+                Screen.ResumeScreen.route -> title.value = "Resume"
+                else -> title.value = ""
+            }
+            if (currentDestination?.isCurrentDestinationHasBackArrow() == true) {
                 TopAppBar(
-                    title = { },
+                    title = {
+                        Text(text = title.value)
+                    },
                     navigationIcon = {
                         IconButton(onClick = {
-
+                            navController.popBackStack()
+                        }) {
+                            Icon(Icons.Default.ArrowBackIos, contentDescription = "")
+                        }
+                    }
+                )
+            } else if (currentDestination?.isCurrentDestinationDescriptionScreen() == true) {
+                TopAppBar(
+                    title = {
+                        Text(text = title.value)
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = {
+                            navController.popBackStack()
                         }) {
                             Icon(Icons.Default.ArrowBackIos, contentDescription = "")
                         }
@@ -75,9 +110,11 @@ fun Navigation() {
                         }
                     }
                 )
-            } else if (currentDestination?.isCurrentDestinationHasTopBar() == true) {
+            } else if (currentDestination?.doesCurrentDestinationHaveTopBar() == true) {
                 TopAppBar(
-                    title = { Text(text = "KorKov") },
+                    title = {
+                        Text(text = title.value)
+                    },
                     navigationIcon = {
                         IconButton(onClick = {
                             scope.launch {
@@ -93,8 +130,11 @@ fun Navigation() {
             }
         },
         drawerContent = {
-            if (currentDestination?.isCurrentDestinationHasTopBar() == true) {
-                DrawerContent(navController = navController, onItemClicked = {
+            if (currentDestination?.doesCurrentDestinationHaveDrawer() == true) {
+                DrawerContent(navController = navController, onItemClicked = { route ->
+                    if (currentDestination.getCurrentRoute() != route) {
+                        navController.navigate(route = route)
+                    }
                     scope.launch {
                         scaffoldState.drawerState.apply {
                             if (isClosed) open() else close()
@@ -102,6 +142,7 @@ fun Navigation() {
                     }
                 })
             }
+
         }
     ) {
 
@@ -109,17 +150,29 @@ fun Navigation() {
             modifier = Modifier.padding(it),
             navController = navController,
             // TODO Fix below
-            startDestination = Graph.AuthGraph.route
+            startDestination = Graph.HomeGraph.route
         ) {
             AuthGraph(navController = navController)
             HomeGraph(navController = navController)
             ProfileGraph(navController = navController)
+            AddVacancyGraph(navController = navController)
+            ResumeGraph(navController = navController)
+            MyFavoriteVacanciesGraph(navController = navController)
         }
     }
 }
 
-private fun NavDestination.isCurrentDestinationHasTopBar() =
+private fun NavDestination.doesCurrentDestinationHaveTopBar() =
     parent?.route != Graph.AuthGraph.route //&& route != Screen.Permissions.// route
+
+private fun NavDestination.doesCurrentDestinationHaveDrawer() =
+    route == Screen.HomeScreen.route || route == Screen.ProfileScreen.route ||
+            route == Screen.ResumeScreen.route || Screen.AddVacancyScreen.route == route
 
 private fun NavDestination.isCurrentDestinationDescriptionScreen() =
     route == Screen.DescriptionScreen.route
+
+private fun NavDestination.getCurrentRoute() = route
+
+private fun NavDestination.isCurrentDestinationHasBackArrow() =
+    route == Screen.ArticleDescriptionScreen.route

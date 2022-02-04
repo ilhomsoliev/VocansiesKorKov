@@ -1,4 +1,4 @@
-package com.example.vocansies.featureHome.presentation.vacancyDescriptionScren
+package com.example.vocansies.featureHome.presentation.vacancyDescriptionScreen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -25,7 +25,7 @@ fun VacancyDescriptionScreen(
 ) {
     val verticalScrolable = rememberScrollState()
 
-    Box(contentAlignment = Alignment.BottomCenter) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
         Button(modifier = Modifier.fillMaxWidth(), onClick = { /*TODO*/ }) {
             Text(text = "Respond", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
         }

@@ -9,9 +9,9 @@ import androidx.compose.ui.unit.dp
 fun AddVacancyTextField(
     label: String,
     value: String,
-    onValueChange: () -> Unit,
+    onValueChange: (String) -> Unit,
 ) {
     Text(text = label)
     SpacerHeight(size = 8.dp)
-    TextField(value = value, onValueChange = { onValueChange() })
+    TextField(value = value, onValueChange = { onValueChange(it) })
 }
